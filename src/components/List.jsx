@@ -129,7 +129,7 @@ const List = () => {
                     response.data.files.map((item, index) => (
                       <TableRow key={index}>
                         <TableCell component="th" scope="row">
-                          {item.key}
+                          {item.key.slice(8)}
                         </TableCell>
                         <TableCell align="right">
                           {item.last_modified_date}
