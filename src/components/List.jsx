@@ -20,6 +20,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 
 import { addFileModalOpen } from "../atoms";
 
@@ -88,7 +90,15 @@ const List = () => {
 
   return (
     <>
-      <Card sx={{ padding: 3 }}>
+      <Card
+        elevation={0}
+        sx={{
+          padding: 3,
+          borderColor: "#cacae6",
+          borderWidth: 1,
+          borderStyle: "solid",
+        }}
+      >
         <Grid container direction="column">
           <Grid
             item
@@ -100,33 +110,51 @@ const List = () => {
             <Typography>Files in S3 Bucket</Typography>
             <Grid item>
               <Button
-                variant="contained"
+                variant="outlined"
+                elevation={0}
+                disableElevation
+                disableFocusRipple
+                disableRipple
                 sx={{
                   textTransform: "none",
-                  backgroundColor: "#5252e9",
+                  borderColor: "#cacae6",
+                  borderWidth: 2,
                   fontWeight: 600,
                   fontFamily: "Work sans",
                   mx: 1,
+                  ":hover": {
+                    borderWidth: 2,
+                  },
                 }}
                 onClick={() => setOpen(true)}
+                startIcon={<FileUploadOutlinedIcon />}
               >
                 Add file
               </Button>
               <Button
-                variant="contained"
+                variant="outlined"
+                elevation={0}
+                disableElevation
+                disableFocusRipple
+                disableRipple
+                startIcon={<RefreshOutlinedIcon />}
                 sx={{
                   textTransform: "none",
-                  backgroundColor: "#5252e9",
+                  borderColor: "#cacae6",
+                  // borderWidth: 1,
+                  border: "none",
                   fontWeight: 600,
                   fontFamily: "Work sans",
+                  mx: 1,
+                  ":hover": {
+                    border: "none",
+                  },
                 }}
                 onClick={() => {
                   setRefresh(!refresh);
                   setShowList(false);
                 }}
-              >
-                Refresh
-              </Button>
+              ></Button>
             </Grid>
           </Grid>
           <Grid item>

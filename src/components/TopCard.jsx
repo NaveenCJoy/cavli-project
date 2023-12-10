@@ -8,8 +8,12 @@ const TopCard = () => {
   const [fileNumber, setFileNumber] = useAtom(filesNumber);
   return (
     <Card
+      elevation={0}
       sx={{
         padding: 3,
+        borderColor: "#cacae6",
+        borderWidth: 1,
+        borderStyle: "solid",
       }}
     >
       <Stack direction="row">

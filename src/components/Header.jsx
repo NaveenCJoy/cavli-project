@@ -22,19 +22,43 @@ const Header = () => {
           >
             Dashboard
           </Typography>
-          {!isLoggedIn ? (
+          {isLoggedIn ? (
+            <>
+              <Button
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  backgroundColor: "#5252e9",
+                  fontWeight: 600,
+                  fontFamily: "Work sans",
+                  mx: 1,
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
             <Button
-              variant="contained"
+              variant="outlined"
+              elevation={0}
+              disableElevation
+              disableFocusRipple
+              disableRipple
               sx={{
                 textTransform: "none",
-                backgroundColor: "#5252e9",
+                borderColor: "#cacae6",
+                borderWidth: 2,
                 fontWeight: 600,
                 fontFamily: "Work sans",
+                mx: 1,
+                ":hover": {
+                  borderWidth: 2,
+                },
               }}
             >
               Login
             </Button>
-          ) : null}
+          )}
         </Toolbar>
       </AppBar>
     </Box>
