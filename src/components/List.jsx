@@ -39,7 +39,7 @@ const List = () => {
     async function list_files_in_s3() {
       try {
         const response = await axios.get(
-          "https://4e6c-2406-8800-9014-7b38-8681-e346-c1e9-284d.ngrok-free.app/listfiles/",
+          "https://e7ea-2406-8800-9014-7b38-8681-e346-c1e9-284d.ngrok-free.app/listfiles/",
           {
             auth: {
               username: "testuser",
@@ -68,12 +68,15 @@ const List = () => {
   const handleDeleteFile = async (fileName) => {
     try {
       await axios
-        .delete(`http://3.27.123.26/deletefile/${fileName}`, {
-          auth: {
-            username: "testuser",
-            password: "testpassword",
-          },
-        })
+        .delete(
+          `https://e7ea-2406-8800-9014-7b38-8681-e346-c1e9-284d.ngrok-free.app/deletefile/${fileName}`,
+          {
+            auth: {
+              username: "testuser",
+              password: "testpassword",
+            },
+          }
+        )
         .then((res) => {
           setRefresh((prev) => !prev);
           setOpenDeleteModal(false);

@@ -36,7 +36,7 @@ const AddFile = () => {
 
     try {
       const uploadedFile = await axios.post(
-        "https://4e6c-2406-8800-9014-7b38-8681-e346-c1e9-284d.ngrok-free.app/uploadfile/",
+        "https://e7ea-2406-8800-9014-7b38-8681-e346-c1e9-284d.ngrok-free.app/uploadfile/",
         formData,
         {
           headers: {
