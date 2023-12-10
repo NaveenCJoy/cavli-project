@@ -41,7 +41,7 @@ const List = () => {
     async function list_files_in_s3() {
       try {
         const response = await axios.get(
-          "https://0c52-2406-8800-9014-7b38-a824-d370-9b42-c927.ngrok-free.app/listfiles/",
+          "https://8c0f-3-27-123-26.ngrok-free.app/listfiles/",
           {
             auth: {
               username: "testuser",
@@ -71,7 +71,7 @@ const List = () => {
     try {
       await axios
         .delete(
-          `https://0c52-2406-8800-9014-7b38-a824-d370-9b42-c927.ngrok-free.app/deletefile/${fileName}`,
+          `https://8c0f-3-27-123-26.ngrok-free.app/deletefile/${fileName}`,
           {
             auth: {
               username: "testuser",
