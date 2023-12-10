@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
+import { logInData } from "../atoms";
+import { useAtom } from "jotai";
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useAtom(logInData);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -33,6 +37,10 @@ const Header = () => {
                   fontFamily: "Work sans",
                   mx: 1,
                 }}
+                onClick={() => {
+                  setIsLoggedIn(null);
+                  navigate("/");
+                }}
               >
                 Logout
               </Button>
@@ -55,6 +63,7 @@ const Header = () => {
                   borderWidth: 2,
                 },
               }}
+              onClick={() => navigate("/")}
             >
               Login
             </Button>

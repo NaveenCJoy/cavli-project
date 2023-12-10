@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { useAtom } from "jotai";
+import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, Grid } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { refreshFileList } from "../atoms";
+import { logInData } from "../atoms";
 
 import { addFileModalOpen } from "../atoms";
 
 const AddFile = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useAtom(addFileModalOpen);
   const [file, setFile] = useState(null);
   const [refresh, setRefresh] = useAtom(refreshFileList);
   const [showWait, setShowWait] = useState(false);
+  const [login, setLogin] = useAtom(logInData);
 
   const handleFileUploadClick = () => {
     document.getElementById("file-input").click();
@@ -44,8 +48,8 @@ const AddFile = () => {
             "ngrok-skip-browser-warning": "69420",
           },
           auth: {
-            username: "testuser",
-            password: "testpassword",
+            username: login.user,
+            password: login.pass,
           },
         }
       );
@@ -79,39 +83,54 @@ const AddFile = () => {
         <CloseIcon />
       </IconButton>
       <DialogContent>
-        <DialogContentText>
-          <Stack gap={5}>
-            <Typography>
-              Select the file you want to upload to AWS S3 Bucket
-            </Typography>
-
-            <input
-              type="file"
-              id="file-input"
-              onChange={handleFileChange}
-              style={{ display: "none" }}
-            />
-            <Button
-              variant="outlined"
-              sx={{ textTransform: "none" }}
-              onClick={handleFileUploadClick}
-            >
-              {file ? file.name : "Choose File"}
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ textTransform: "none", backgroundColor: "#5252e9" }}
-              onClick={UploadFile}
-            >
-              Upload
-            </Button>
-            {showWait && (
-              <Typography alignSelf="center">
-                Uploading File...Please wait
+        {login ? (
+          <DialogContentText>
+            <Stack gap={5}>
+              <Typography>
+                Select the file you want to upload to AWS S3 Bucket
               </Typography>
-            )}
-          </Stack>
-        </DialogContentText>
+
+              <input
+                type="file"
+                id="file-input"
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+              <Button
+                variant="outlined"
+                sx={{ textTransform: "none" }}
+                onClick={handleFileUploadClick}
+              >
+                {file ? file.name : "Choose File"}
+              </Button>
+              <Button
+                variant="contained"
+                sx={{ textTransform: "none", backgroundColor: "#5252e9" }}
+                onClick={UploadFile}
+              >
+                Upload
+              </Button>
+              {showWait && (
+                <Typography alignSelf="center">
+                  Uploading File...Please wait
+                </Typography>
+              )}
+            </Stack>
+          </DialogContentText>
+        ) : (
+          <DialogContentText>
+            <Grid container direction="column">
+              <Typography>Please Login to upload file</Typography>
+              <Button
+                variant="outlined"
+                sx={{ my: 2 }}
+                onClick={() => navigate("/")}
+              >
+                Go to Login Page
+              </Button>
+            </Grid>
+          </DialogContentText>
+        )}
       </DialogContent>
     </Dialog>
   );

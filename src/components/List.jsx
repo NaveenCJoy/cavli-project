@@ -22,6 +22,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
+import { logInData } from "../atoms";
 
 import { addFileModalOpen } from "../atoms";
 
@@ -34,6 +35,7 @@ const List = () => {
   const [refresh, setRefresh] = useAtom(refreshFileList);
   const [filenumber, setFilenumber] = useAtom(filesNumber);
   const [showList, setShowList] = useState(false);
+  const [login, setLogin] = useAtom(logInData);
 
   useEffect(() => {
     async function list_files_in_s3() {

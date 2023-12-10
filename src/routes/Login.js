@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -9,9 +9,29 @@ import Link from "@mui/material/Link";
 import { Card, Grid, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { logInData } from "../atoms";
+import { useAtom } from "jotai";
 
 const Login = () => {
+  const [loggedIn, setLoggedIn] = useAtom(logInData);
+  const [username, setUsername] = useState("");
+  const [password, setPassoword] = useState("");
   const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const credentials = {
+      user: username,
+      pass: password,
+    };
+    setLoggedIn(credentials);
+
+    if (password.length > 0) {
+      navigate("/home");
+    }
+  };
+
   return (
     <Grid
       container
@@ -39,11 +59,14 @@ const Login = () => {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
               autoFocus
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
             />
             <TextField
               margin="normal"
@@ -54,6 +77,10 @@ const Login = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => {
+                setPassoword(e.target.value);
+              }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -65,7 +92,7 @@ const Login = () => {
               variant="contained"
               color="primary"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => navigate("/home")}
+              onClick={handleLogin}
             >
               Sign In
             </Button>
