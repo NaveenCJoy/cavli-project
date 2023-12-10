@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import Button from "@mui/material/Button";
 import { Grid, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -18,6 +19,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { addFileModalOpen } from "../atoms";
 
@@ -29,22 +31,30 @@ const List = () => {
   const [response, setResponse] = useState(null);
   const [refresh, setRefresh] = useAtom(refreshFileList);
   const [filenumber, setFilenumber] = useAtom(filesNumber);
+  const [showList, setShowList] = useState(false);
 
   useEffect(() => {
     async function list_files_in_s3() {
       try {
-        const response = await axios.get("http://3.27.123.26/listfiles/", {
-          auth: {
-            username: "testuser",
-            password: "testpassword",
-          },
-        });
+        const response = await axios.get(
+          "https://4e6c-2406-8800-9014-7b38-8681-e346-c1e9-284d.ngrok-free.app/listfiles/",
+          {
+            auth: {
+              username: "testuser",
+              password: "testpassword",
+            },
+            headers: {
+              "ngrok-skip-browser-warning": "100",
+            },
+          }
+        );
+
         setResponse(response);
-        // setIsLoading(false);
-        setFilenumber(response.data.files.length);
         console.log(response);
+        setFilenumber(response.data.files.length);
+        setShowList(true);
       } catch (error) {
-        console.log(error);
+        console.log("error:", error);
       }
     }
 
@@ -110,7 +120,10 @@ const List = () => {
                   fontWeight: 600,
                   fontFamily: "Work sans",
                 }}
-                onClick={() => setRefresh(!refresh)}
+                onClick={() => {
+                  setRefresh(!refresh);
+                  setShowList(false);
+                }}
               >
                 Refresh
               </Button>
@@ -131,43 +144,48 @@ const List = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {response ? (
-                    response.data.files.map((item, index) => (
-                      <TableRow key={index}>
-                        <TableCell component="th" scope="row">
-                          {item.key.slice(8)}
-                        </TableCell>
-                        <TableCell align="right">
-                          {item.last_modified_date}
-                        </TableCell>
-                        <TableCell align="right">
-                          <Button onClick={() => navigate("/graph")}>
-                            View
-                          </Button>
-                        </TableCell>
-                        <TableCell align="right">
-                          <Button
-                            // onClick={() => {
-                            //   handleDeleteFile(item.key.slice(8));
-                            // }}
-                            onClick={() => {
-                              setDeleteFile(item.key.slice(8));
-                              setOpenDeleteModal(true);
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </TableCell>
-                        <TableCell align="right">Download</TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <p>Please refresh</p>
-                  )}
+                  {response && showList
+                    ? response.data.files.map((item, index) => (
+                        <TableRow key={index}>
+                          <TableCell component="th" scope="row">
+                            {item.key.slice(8)}
+                          </TableCell>
+                          <TableCell align="right">
+                            {item.last_modified_date}
+                          </TableCell>
+                          <TableCell align="right">
+                            <Button onClick={() => navigate("/graph")}>
+                              View
+                            </Button>
+                          </TableCell>
+                          <TableCell align="right">
+                            <Button
+                              // onClick={() => {
+                              //   handleDeleteFile(item.key.slice(8));
+                              // }}
+                              onClick={() => {
+                                setDeleteFile(item.key.slice(8));
+                                setOpenDeleteModal(true);
+                              }}
+                            >
+                              Delete
+                            </Button>
+                          </TableCell>
+                          <TableCell align="right">Download</TableCell>
+                        </TableRow>
+                      ))
+                    : null}
                 </TableBody>
               </Table>
             </TableContainer>
           </Grid>
+          {!showList && (
+            <Grid item alignSelf="center">
+              <Box sx={{ my: 1 }}>
+                <CircularProgress />
+              </Box>
+            </Grid>
+          )}
         </Grid>
       </Card>
       <Dialog open={openDeleteModal}>

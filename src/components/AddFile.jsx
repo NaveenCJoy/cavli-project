@@ -36,11 +36,12 @@ const AddFile = () => {
 
     try {
       const uploadedFile = await axios.post(
-        "http://3.27.123.26/uploadfile/",
+        "https://4e6c-2406-8800-9014-7b38-8681-e346-c1e9-284d.ngrok-free.app/uploadfile/",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            "ngrok-skip-browser-warning": "69420",
           },
           auth: {
             username: "testuser",
@@ -104,7 +105,11 @@ const AddFile = () => {
             >
               Upload
             </Button>
-            {showWait && <p>Uploading File...</p>}
+            {showWait && (
+              <Typography alignSelf="center">
+                Uploading File...Please wait
+              </Typography>
+            )}
           </Stack>
         </DialogContentText>
       </DialogContent>
