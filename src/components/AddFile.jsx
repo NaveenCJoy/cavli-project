@@ -36,11 +36,15 @@ const AddFile = () => {
 
     try {
       const uploadedFile = await axios.post(
-        "http://127.0.0.1:8000/uploadfile/",
+        "http://3.27.123.26/uploadfile/",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+          },
+          auth: {
+            username: "testuser",
+            password: "testpassword",
           },
         }
       );
@@ -62,6 +66,7 @@ const AddFile = () => {
         onClick={() => {
           setOpen(false);
           setFile(null);
+          setShowWait(false);
         }}
         sx={{
           position: "absolute",

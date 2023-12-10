@@ -33,7 +33,12 @@ const List = () => {
   useEffect(() => {
     async function list_files_in_s3() {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/listfiles/");
+        const response = await axios.get("http://3.27.123.26/listfiles/", {
+          auth: {
+            username: "testuser",
+            password: "testpassword",
+          },
+        });
         setResponse(response);
         // setIsLoading(false);
         setFilenumber(response.data.files.length);
@@ -46,16 +51,17 @@ const List = () => {
     list_files_in_s3();
   }, [refresh]);
 
-  // const handleDelteConfirm = (fileName) => {
-  //   setOpenDeleteModal(true);
-
-  // };
   const [deleteFile, setDeleteFile] = useState(null);
 
   const handleDeleteFile = async (fileName) => {
     try {
       await axios
-        .delete(`http://127.0.0.1:8000/deletefile/${fileName}`)
+        .delete(`http://3.27.123.26/deletefile/${fileName}`, {
+          auth: {
+            username: "testuser",
+            password: "testpassword",
+          },
+        })
         .then((res) => {
           setRefresh((prev) => !prev);
           setOpenDeleteModal(false);
@@ -66,7 +72,7 @@ const List = () => {
           }
         });
     } catch (error) {
-      console.log(error);
+      console.log("error:", error);
     }
   };
 
