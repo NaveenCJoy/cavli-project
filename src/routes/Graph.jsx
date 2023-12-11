@@ -6,6 +6,11 @@ import data from "../data/sensor_data.json";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ReplyIcon from "@mui/icons-material/Reply";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import {
   LineChart,
   AreaChart,
@@ -22,7 +27,8 @@ import {
 const Graph = () => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 50;
+  const [itemsPerPage, setItemsPerPage] = useState(50);
+  const [lineColor, setLineColor] = useState("red");
 
   const voltageData = data.data[0].values;
   const timestampData = data.data[0].timestamps;
@@ -102,7 +108,7 @@ const Graph = () => {
               type="monotone"
               dataKey="voltage"
               // stroke="#8884d8"
-              stroke="red"
+              stroke={lineColor}
               strokeWidth={2}
               activeDot={{ r: 8 }}
             />
@@ -133,6 +139,49 @@ const Graph = () => {
         >
           <ChevronRightIcon />
         </Button>
+        {/* <Button>Change no of items per page</Button> */}
+        <Typography
+          sx={window.innerWidth <= 750 ? { mx: 1, my: 5 } : { mx: 1 }}
+        >
+          No of items per page:
+        </Typography>
+        <FormControl sx={{ width: "6rem", mx: 1 }}>
+          <InputLabel id="demo-simple-select-label">Items</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={itemsPerPage}
+            label="Items"
+            onChange={(e) => {
+              setItemsPerPage(e.target.value);
+            }}
+          >
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={30}>30</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
+            <MenuItem value={80}>80</MenuItem>
+            <MenuItem value={100}>100</MenuItem>
+            <MenuItem value={1000}>1000</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          fullWidth
+          sx={window.innerWidth <= 650 ? "" : { width: "6rem" }}
+        >
+          <InputLabel id="demo-simple-select-label">Line Color</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={lineColor}
+            label="Line Color"
+            onChange={(e) => setLineColor(e.target.value)}
+          >
+            <MenuItem value={"red"}>Red</MenuItem>
+            <MenuItem value={"blue"}>Blue</MenuItem>
+            <MenuItem value={"green"}>Green</MenuItem>
+          </Select>
+        </FormControl>
       </Grid>
     </Grid>
   );
