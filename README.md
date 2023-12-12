@@ -3,13 +3,21 @@ This project was created with React (create-react-app)
 ## Available Scripts
 
 npm start - Runs the app in development mode
+
 npm test - Launches the test runner in the interactive watch mode
+
 npm run build - Builds the app for production to the 'build' folder
 
+## Tech stack used
+
 Frontend library - React
+
 State management - jotai
-UI - Material UI
+
+UI library - Material UI
+
 Chart library - Recharts
+
 
 ## Project details
 
@@ -25,3 +33,5 @@ Click on "View" to see graph. It takes you to "/graph" page.
 download feature was not working, so the "/graph" page shows static data (sensor_data.json) from /data folder inside /src.
 
 Large data like that in sensor_data.json could not be fitted into a single graph, so splitted up the amount of data that is shown. No of items per page and color of line chart can be changed by user.
+
+Hosted at netlify: https://file-upload-to-s3.netlify.app/
