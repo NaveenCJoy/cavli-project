@@ -31,6 +31,7 @@ const AddFile = () => {
     setFile(selectedFile);
   };
 
+  //upload file to s3 bucket
   const UploadFile = async () => {
     if (file) {
       setShowWait(true);

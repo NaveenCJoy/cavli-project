@@ -6,15 +6,12 @@ import data from "../data/sensor_data.json";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ReplyIcon from "@mui/icons-material/Reply";
-import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import {
   LineChart,
-  AreaChart,
-  Area,
   Line,
   XAxis,
   YAxis,
@@ -39,11 +36,13 @@ const Graph = () => {
   const pageVoltageData = voltageData.slice(startIndex, endIndex);
   const pageTimestampData = timestampData.slice(startIndex, endIndex);
 
+  // convert json data into data form required by recharts
   const chartData = pageVoltageData.map((value, index) => ({
     voltage: value,
     timestamp: pageTimestampData[index],
   }));
 
+  //determine total pages based on no. of items per page
   const totalPages = Math.ceil(voltageData.length / itemsPerPage);
 
   const handlePrevPage = () => {
@@ -95,11 +94,7 @@ const Graph = () => {
             width={500}
             height={500}
           >
-            <CartesianGrid
-              // strokeDasharray="10 10"
-              horizontal="true"
-              vertical=""
-            />
+            <CartesianGrid horizontal="true" vertical="" />
             <XAxis dataKey="timestamp" />
             <YAxis dataKey="voltage" />
             <Tooltip />

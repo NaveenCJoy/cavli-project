@@ -30,3 +30,8 @@ Click on "View" to see graph. It takes you to "/graph" page.
 download feature was not working, so the "/graph" page shows static data (sensor_data.json) from /data folder inside /src.
 
 Large data like that in sensor_data.json could not be fitted into a single graph, so splitted up the amount of data that is shown. No of items per page and color of line chart can be changed by user.
+
+fastapi: http://3.27.123.26/docs
+list all the files in s3 bucket: http://3.27.123.26/listfiles/
+upload a file to s3 bucket: http://3.27.123.26/upload/
+delete a file: http://3.27.123.26/deletefile/{filename}
